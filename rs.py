@@ -1,13 +1,8 @@
-# Supporte uniquemenent reed-solomon dans GF(256)=GF(2^8) pour des raisons de simplification du code. 
-# Une amelioration pourrait arriver, en particulier sans avoir a referer 0x11d
-
 from gf import GF
 from gf256 import *
 from gf256int import *
 from polynome import *
 from polynomeGF import *
-
-#0x11d
 
 class ReedSolomon:
     def __init__(self,n,k):
@@ -106,13 +101,13 @@ class ReedSolomon:
         
         if cond :
             print("pas d'erreurs")
-            return msgBuffer[errSize:]
+            return msgBuffer[errSize:] # Change this if you want to return an error if it is not possible to restore the message
         
         errLoc = self.errorLocator(syndrome)
 
         errPos = self.errorPosition(errLoc)     
 
-        if errLoc.len()-1 != len(errPos): return msgBuffer[errSize:]
+        if errLoc.len()-1 != len(errPos): return msgBuffer[errSize:] # Change this if you want to return an error if it is not possible to restore the message
         errorPolynome = self.errorPolynomial(syndrome,errLoc,errPos) 
         
 
